@@ -55,18 +55,19 @@ const displayVideos = (videoItems) => {
     const videoDisplay = document.createElement("div");
     videoDisplay.classList = "card";
     videoDisplay.innerHTML = `
-      <figure class="px-10 pt-10">
+      <figure class="h-[200px] px-3 py-2">
     <img
       src=${video.thumbnail}
       alt="Shoes"
-      class="rounded-xl" />
+      class="h-full w-full  object-cover rounded-xl" />
   </figure>
-  <div class="card-body items-center text-center">
-    <h2 class="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div class="card-actions">
-      <button class="btn btn-primary">Buy Now</button>
-    </div>
+  <div class="flex gap-2 px-3 py-2">
+      <div class="">
+            <img class="w-10 h-10 rounded-full object-cover" src=${video.authors[0].profile_picture}/>
+      </div>
+    <div></div>
+
+
   </div>
     
     `;
