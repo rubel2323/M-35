@@ -42,6 +42,18 @@ const details = {
   ],
 };
 
+// Time display of each post
+const getTimePosted = (time) => {
+  let hour = parseInt(time / 3600);
+  let timeRest = time % 3600;
+  let minutes = parseInt(timeRest / 60);
+
+  let secondsRemaining = timeRest % 60;
+
+  return `${hour} hour and ${minutes} minutes and ${secondsRemaining} seconds ago`;
+};
+// console.log(getTimePosted(3606));
+
 const loadVideos = () => {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((res) => res.json())
@@ -60,9 +72,13 @@ const displayVideos = (videoItems) => {
       src=${video.thumbnail}
       alt="Shoes"
       class="h-full w-full  object-cover rounded-xl" />
-      <span class="absolute">
-      
-      </span>
+      ${
+        video.others.posted_date?.length == 0
+          ? ""
+          : `<span class="absolute text-gray-200 font-bold  bottom-2 right-2 bg-black ">
+      ${getTimePosted(video.others.posted_date)}
+      </span>`
+      }
   </figure>
   <div class="flex gap-2 px-3 py-2">
       <div class="">
