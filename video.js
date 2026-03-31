@@ -55,17 +55,32 @@ const displayVideos = (videoItems) => {
     const videoDisplay = document.createElement("div");
     videoDisplay.classList = "card";
     videoDisplay.innerHTML = `
-      <figure class="h-[200px] px-3 py-2">
+      <figure class="h-[200px] px-3 py-2 relative">
     <img
       src=${video.thumbnail}
       alt="Shoes"
       class="h-full w-full  object-cover rounded-xl" />
+      <span class="absolute">
+      
+      </span>
   </figure>
   <div class="flex gap-2 px-3 py-2">
       <div class="">
             <img class="w-10 h-10 rounded-full object-cover" src=${video.authors[0].profile_picture}/>
       </div>
-    <div></div>
+    <div>
+    <h2 class="font-bold text-2xl">${video.title}</h2>
+    <div class="flex gap-2 items-center">
+    <p>${video.authors[0].profile_name}</p>
+    ${
+      video.authors[0].verified == true
+        ? `<img class="w-5 h-5 object-cover"
+    src="https://img.icons8.com/?size=96&id=91kLZWvmd4sg&format=png"/>`
+        : ""
+    }
+    </div>
+    
+    </div>
 
 
   </div>
