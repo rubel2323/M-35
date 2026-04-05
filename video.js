@@ -8,7 +8,6 @@ function loadCategory() {
 }
 
 const loadCategoryById = (id) => {
-  alert(id);
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json())
     .then((data) => displayVideos(data.category))
@@ -76,9 +75,23 @@ const loadVideos = () => {
     .then((videos) => displayVideos(videos.videos))
     .catch((error) => console.log(error));
 };
+
 const displayVideos = (videoItems) => {
   const videoContainer = document.getElementById("videos");
   videoContainer.innerHTML = "";
+
+  if (videoItems.length == 0) {
+    videoContainer.classList.remove("grid");
+    videoContainer.innerHTML = ` 
+  <div class="min-h-[400px] flex flex-col items-center justify-center">
+  <img src="./resources/Icon.png"/>
+  <h2 class="font-bold text-2xl">No video added here</h2>
+  </div>
+  `;
+  } else {
+    videoContainer.classList.add("grid");
+  }
+
   videoItems.forEach((video) => {
     console.log(video);
     const videoDisplay = document.createElement("div");
