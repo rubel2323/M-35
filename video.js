@@ -1,5 +1,10 @@
 // {category_id: '1001', category: 'Music'}
 
+const removeActiveBtn = () => {
+  const buttons = document.querySelectorAll(".btn");
+  console.log(buttons);
+  buttons.forEach((button) => button.classList.remove("activeBtn"));
+};
 function loadCategory() {
   fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
     .then((res) => res.json())
@@ -10,7 +15,15 @@ function loadCategory() {
 const loadCategoryById = (id) => {
   fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     .then((res) => res.json())
-    .then((data) => displayVideos(data.category))
+    .then((data) => {
+      removeActiveBtn();
+      let activeButton = document.getElementById(`btn-${id}`);
+
+      // active button added
+      activeButton.classList.add("activeBtn");
+      console.log("this is loadCategoryById and ", data.category);
+      displayVideos(data.category);
+    })
     .catch((error) => console.error(error));
 };
 
@@ -20,7 +33,7 @@ function displayCategoryBtn(item) {
     const category = document.getElementById("displayCatagory");
     const btnContainer = document.createElement("div");
     btnContainer.innerHTML = `
-<button onclick="loadCategoryById(${element.category_id})" class="btn">
+<button id="btn-${element.category_id}" onclick="loadCategoryById(${element.category_id})" class="btn">
 ${element.category}
 </button>
 
@@ -30,8 +43,6 @@ ${element.category}
     category.appendChild(btnContainer);
   });
 }
-
-loadCategory();
 
 const details = {
   category: [
@@ -88,6 +99,7 @@ const displayVideos = (videoItems) => {
   <h2 class="font-bold text-2xl">No video added here</h2>
   </div>
   `;
+    return;
   } else {
     videoContainer.classList.add("grid");
   }
@@ -136,3 +148,4 @@ const displayVideos = (videoItems) => {
   });
 };
 loadVideos();
+loadCategory();
