@@ -6,16 +6,32 @@ function loadCategory() {
     .then((data) => displayCategoryBtn(data.categories))
     .catch((error) => console.error(error));
 }
+
+const loadCategoryById = (id) => {
+  alert(id);
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category))
+    .catch((error) => console.error(error));
+};
+
 function displayCategoryBtn(item) {
   item.forEach((element) => {
     console.log(element.category);
     const category = document.getElementById("displayCatagory");
-    const btnContainer = document.createElement("button");
-    btnContainer.classList.add("btn");
-    btnContainer.innerText = element.category;
+    const btnContainer = document.createElement("div");
+    btnContainer.innerHTML = `
+<button onclick="loadCategoryById(${element.category_id})" class="btn">
+${element.category}
+</button>
+
+`;
+
+    //append it to implement
     category.appendChild(btnContainer);
   });
 }
+
 loadCategory();
 
 const details = {
@@ -62,6 +78,7 @@ const loadVideos = () => {
 };
 const displayVideos = (videoItems) => {
   const videoContainer = document.getElementById("videos");
+  videoContainer.innerHTML = "";
   videoItems.forEach((video) => {
     console.log(video);
     const videoDisplay = document.createElement("div");
@@ -75,7 +92,7 @@ const displayVideos = (videoItems) => {
       ${
         video.others.posted_date?.length == 0
           ? ""
-          : `<span class="absolute text-gray-200 font-bold  bottom-2 right-2 bg-black ">
+          : `<span class="absolute text-gray-200 font-bold  bottom-2 right-3 bg-black text-xs">
       ${getTimePosted(video.others.posted_date)}
       </span>`
       }
