@@ -27,6 +27,17 @@ const loadCategoryById = (id) => {
     .catch((error) => console.error(error));
 };
 
+// Details button function
+const loadDetails = async (videoId) => {
+  const response = await fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`,
+  );
+
+  const data = await response.json();
+
+  console.log(data.video.description);
+};
+
 function displayCategoryBtn(item) {
   item.forEach((element) => {
     console.log(element.category);
@@ -44,7 +55,7 @@ ${element.category}
   });
 }
 
-const details = {
+const detailsInformation = {
   category: [
     {
       category_id: "1001",
@@ -105,7 +116,6 @@ const displayVideos = (videoItems) => {
   }
 
   videoItems.forEach((video) => {
-    console.log(video);
     const videoDisplay = document.createElement("div");
     videoDisplay.classList = "card";
     videoDisplay.innerHTML = `
@@ -123,12 +133,12 @@ const displayVideos = (videoItems) => {
       }
   </figure>
   <div class="flex gap-2 px-3 py-2">
-      <div class="">
-            <img class="w-10 h-10 rounded-full object-cover" src=${video.authors[0].profile_picture}/>
-      </div>
-    <div>
+             <div class="">
+                 <img class="w-10 h-10 rounded-full object-cover" src=${video.authors[0].profile_picture}/>
+            </div>
+  <div>
     <h2 class="font-bold text-2xl">${video.title}</h2>
-    <div class="flex gap-2 items-center">
+            <div class="flex gap-2 items-center">
     <p>${video.authors[0].profile_name}</p>
     ${
       video.authors[0].verified == true
@@ -136,8 +146,8 @@ const displayVideos = (videoItems) => {
     src="https://img.icons8.com/?size=96&id=91kLZWvmd4sg&format=png"/>`
         : ""
     }
-    </div>
-    
+          </div>
+    <button onclick="loadDetails('${video.video_id}')" class="btn btn-sm mt-1 bg-cyan-300 text-black text-lg">Details</button>
     </div>
 
 
