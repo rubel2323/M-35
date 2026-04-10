@@ -35,7 +35,22 @@ const loadDetails = async (videoId) => {
 
   const data = await response.json();
 
-  console.log(data.video.description);
+  displayDetails(data.video);
+};
+
+const displayDetails = (video) => {
+  console.log(video);
+  // way-1
+  // document.getElementById("my_modal_5").showModal();
+  // way-2
+
+  const modalContainer = document.getElementById("modal-content");
+  modalContainer.innerHTML = `
+  <img src= ${video.thumbnail}>
+  <p>${video.description}</p>
+  `;
+  const modalShow = document.getElementById("customModal");
+  modalShow.showModal();
 };
 
 function displayCategoryBtn(item) {
