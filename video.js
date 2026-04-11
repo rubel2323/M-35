@@ -106,8 +106,10 @@ const getTimePosted = (time) => {
 };
 // console.log(getTimePosted(3606));
 
-const loadVideos = () => {
-  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+const loadVideos = (searchText = "") => {
+  fetch(
+    `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`,
+  )
     .then((res) => res.json())
     .then((videos) => displayVideos(videos.videos))
     .catch((error) => console.log(error));
@@ -172,5 +174,9 @@ const displayVideos = (videoItems) => {
     videoContainer.append(videoDisplay);
   });
 };
+
+document.getElementById("search-input").addEventListener("keyup", (event) => {
+  loadVideos(event.target.value);
+});
 loadVideos();
 loadCategory();
