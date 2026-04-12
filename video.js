@@ -141,7 +141,7 @@ const displayVideos = (videoItems) => {
     videoDisplay.innerHTML = `
       <figure class="h-[200px] px-3 py-2 relative">
     <img
-      src=${video.thumbnail}
+      src="${video.thumbnail}"
       alt="Shoes"
       class="h-full w-full  object-cover rounded-xl" />
       ${
@@ -192,7 +192,7 @@ function sortedView() {
 }
 //views function calculation
 const parseViews = (value) => {
-  if (typeof value === "string" && value.includes("k")) {
+  if (typeof value === "string" && value.toLowerCase().includes("k")) {
     return parseFloat(value) * 1000;
   }
   return parseFloat(value);
