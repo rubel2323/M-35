@@ -184,6 +184,7 @@ document.getElementById("search-input").addEventListener("keyup", (event) => {
 loadVideos();
 loadCategory();
 
+// sorted view by view number added
 function sortedView() {
   fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((res) => res.json())
