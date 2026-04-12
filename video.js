@@ -106,6 +106,7 @@ const getTimePosted = (time) => {
 };
 // console.log(getTimePosted(3606));
 
+// search text added
 const loadVideos = (searchText = "") => {
   fetch(
     `https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`,
@@ -133,6 +134,8 @@ const displayVideos = (videoItems) => {
   }
 
   videoItems.forEach((video) => {
+    // ----
+
     const videoDisplay = document.createElement("div");
     videoDisplay.classList = "card";
     videoDisplay.innerHTML = `
@@ -180,3 +183,29 @@ document.getElementById("search-input").addEventListener("keyup", (event) => {
 });
 loadVideos();
 loadCategory();
+
+function sortedView() {
+  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+    .then((res) => res.json())
+    .then((data) => sortedDisplay(data.videos));
+}
+//views function calculation
+const parseViews = (value) => {
+  if (typeof value === "string" && value.includes("k")) {
+    return parseFloat(value) * 1000;
+  }
+  return parseFloat(value);
+};
+
+const sortedDisplay = (allVideos) => {
+  allVideos.sort(
+    (a, b) => parseViews(b.others.views) - parseViews(a.others.views),
+  );
+
+  allVideos.forEach((video) =>
+    console.log(video.title, "=", video.others.views),
+  );
+  displayVideos(allVideos);
+};
+
+document.getElementById("sort-btn").addEventListener("click", sortedView);
